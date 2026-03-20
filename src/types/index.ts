@@ -1,8 +1,5 @@
-export interface Project {
+export interface ProjectMeta {
   id: string;
-  title: string;
-  subtitle?: string;
-  description: string;
   coverImage?: string;
   accentColor: string;
   status: 'developing' | 'completed';

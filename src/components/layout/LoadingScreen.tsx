@@ -2,8 +2,13 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Dictionary } from '@/i18n';
 
-export default function LoadingScreen() {
+interface LoadingScreenProps {
+  dict: Dictionary['loading'];
+}
+
+export default function LoadingScreen({ dict }: LoadingScreenProps) {
   const [show, setShow] = useState(false);
   const [phase, setPhase] = useState<'draw' | 'burst' | 'curtain' | 'done'>('done');
 
@@ -115,7 +120,7 @@ export default function LoadingScreen() {
             animate={{ opacity: 0.5 }}
             transition={{ delay: 0.8 }}
           >
-            Click to skip
+            {dict.skip}
           </motion.p>
         </motion.div>
       )}

@@ -10,7 +10,7 @@
   --color-text-primary: #F5F5F5;
   --color-text-secondary: #A0A0B0;
   --color-text-muted: #6B6B80;
-  --font-sans: 'Pretendard', sans-serif;
+  --font-sans: 'Pretendard', 'Noto Sans JP', sans-serif;
 }
 
 html {

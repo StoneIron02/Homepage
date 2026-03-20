@@ -3,14 +3,16 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { Project } from '@/types';
+import { ProjectMeta } from '@/types';
+import type { Dictionary } from '@/i18n';
 
 interface ProjectCardProps {
-  project: Project;
+  project: ProjectMeta;
+  dict: Dictionary['projects'];
   index: number;
 }
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({ project, dict, index }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -29,6 +31,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     mouseX.set(0);
     mouseY.set(0);
   };
+
+  const projectDict = dict.items[project.id];
+  const title = projectDict?.title ?? '';
+  const subtitle = projectDict?.subtitle ?? '';
+  const description = projectDict?.description ?? '';
 
   return (
     <motion.div
@@ -71,7 +78,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {project.coverImage ? (
             <Image
               src={project.coverImage}
-              alt={project.title}
+              alt={title}
               width={600}
               height={192}
               className="w-full h-full object-cover"
@@ -82,7 +89,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 className="text-4xl font-bold opacity-20"
                 style={{ color: project.accentColor }}
               >
-                {project.title.charAt(0)}
+                {title.charAt(0)}
               </span>
             </div>
           )}
@@ -93,28 +100,28 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-lg font-bold text-text-primary group-hover:text-gold transition-colors">
-                {project.title}
+                {title}
               </h3>
-              {project.subtitle && (
-                <p className="text-xs text-text-muted mt-0.5">{project.subtitle}</p>
+              {subtitle && (
+                <p className="text-xs text-text-muted mt-0.5">{subtitle}</p>
               )}
             </div>
             {project.status === 'developing' ? (
               <span className="flex items-center gap-1.5 text-xs text-gold whitespace-nowrap bg-gold/10 px-2 py-1 rounded-full">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse-dot" />
-                DEVELOPING
+                {dict.developing}
               </span>
             ) : (
               <span className="text-xs text-text-muted whitespace-nowrap bg-white/5 px-2 py-1 rounded-full">
-                COMPLETED
+                {dict.completed}
               </span>
             )}
           </div>
 
           {/* 설명 */}
-          {project.description && (
+          {description && (
             <p className="mt-2 text-sm text-text-secondary leading-relaxed line-clamp-5">
-              {project.description}
+              {description}
             </p>
           )}
 
@@ -125,7 +132,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="absolute inset-0 z-20"
-              aria-label={`${project.title} 열기`}
+              aria-label={`${title} 열기`}
             />
           )}
         </div>

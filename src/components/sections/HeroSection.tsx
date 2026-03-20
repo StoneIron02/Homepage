@@ -12,6 +12,7 @@ import ParticleBackground from '@/components/ui/ParticleBackground';
 import { sakuraParticles } from '@/lib/particles';
 import { fadeInUp } from '@/lib/animations';
 import { socialLinks } from '@/data/about';
+import type { Dictionary } from '@/i18n';
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   twitter: <Twitter size={20} />,
@@ -20,7 +21,11 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   pixiv: <PixivIcon size={20} />,
 };
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  dict: Dictionary['hero'];
+}
+
+export default function HeroSection({ dict }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -54,7 +59,7 @@ export default function HeroSection() {
             animate="visible"
             custom={0.2}
           >
-            Creator pursuing ideals
+            {dict.caption}
           </motion.p>
 
           {/* KISHI 대형 타이틀 */}
@@ -64,7 +69,7 @@ export default function HeroSection() {
             delay={0.5}
           />
 
-          {/* 한국어 서브타이틀 */}
+          {/* 서브타이틀 */}
           <motion.p
             className="text-3xl md:text-4xl text-gold"
             variants={fadeInUp}
@@ -72,13 +77,13 @@ export default function HeroSection() {
             animate="visible"
             custom={1.2}
           >
-            키시 キシ
+            {dict.subtitle}
           </motion.p>
 
           {/* 타이프라이터 */}
           <div className="text-lg md:text-xl text-text-secondary min-h-[2em]">
             <TypewriterText
-              text="이상을 좇는 크리에이터"
+              text={dict.typewriter}
               speed={80}
               delay={1500}
             />
@@ -141,7 +146,7 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5 }}
       >
-        <span className="text-text-muted text-xs tracking-widest uppercase">Scroll</span>
+        <span className="text-text-muted text-xs tracking-widest uppercase">{dict.scroll}</span>
         <div className="flex flex-col">
           <ChevronDown size={16} className="text-text-muted animate-scroll-chevron" />
           <ChevronDown size={16} className="text-text-muted animate-scroll-chevron -mt-2" style={{ animationDelay: '0.3s' }} />

@@ -4,8 +4,13 @@ import { motion } from 'framer-motion';
 import { fadeInUp } from '@/lib/animations';
 import { projects } from '@/data/projects';
 import ProjectCard from '@/components/ui/ProjectCard';
+import type { Dictionary } from '@/i18n';
 
-export default function ProjectsSection() {
+interface ProjectsSectionProps {
+  dict: Dictionary['projects'];
+}
+
+export default function ProjectsSection({ dict }: ProjectsSectionProps) {
   return (
     <section id="projects" className="relative section-padding bg-grid-pattern">
       <div className="max-w-6xl mx-auto">
@@ -25,7 +30,7 @@ export default function ProjectsSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             style={{ transformOrigin: 'right' }}
           />
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary">PROJECTS</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-text-primary">{dict.title}</h2>
           <motion.div
             className="h-px bg-gradient-to-l from-transparent to-gold flex-1 max-w-[100px]"
             initial={{ scaleX: 0 }}
@@ -41,7 +46,7 @@ export default function ProjectsSection() {
         {/* 프로젝트 그리드 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
           {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+            <ProjectCard key={project.id} project={project} dict={dict} index={i} />
           ))}
         </div>
       </div>

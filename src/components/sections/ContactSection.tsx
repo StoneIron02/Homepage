@@ -9,6 +9,7 @@ import ParticleBackground from '@/components/ui/ParticleBackground';
 import MagneticButton from '@/components/ui/MagneticButton';
 import { starParticles } from '@/lib/particles';
 import { socialLinks } from '@/data/about';
+import type { Dictionary } from '@/i18n';
 
 const EMAIL = 'contact@stoneiron.net';
 
@@ -19,7 +20,11 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   pixiv: <PixivIcon size={28} />,
 };
 
-export default function ContactSection() {
+interface ContactSectionProps {
+  dict: Dictionary['contact'];
+}
+
+export default function ContactSection({ dict }: ContactSectionProps) {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = useCallback(async () => {
@@ -28,10 +33,9 @@ export default function ContactSection() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // 폴백: prompt
-      window.prompt('이메일 주소를 복사하세요:', EMAIL);
+      window.prompt(dict.emailFallback, EMAIL);
     }
-  }, []);
+  }, [dict.emailFallback]);
 
   return (
     <section
@@ -53,7 +57,7 @@ export default function ContactSection() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          함께 만들어가요
+          {dict.heading}
         </motion.h2>
 
         {/* 이메일 */}
@@ -70,7 +74,7 @@ export default function ContactSection() {
           <button
             onClick={copyEmail}
             className="relative w-8 h-8 flex items-center justify-center rounded-lg glass hover:border-gold/30 transition-colors text-text-secondary hover:text-gold"
-            title="Copy email"
+            title={dict.copyEmail}
           >
             <AnimatePresence mode="wait">
               {copied ? (
@@ -95,7 +99,7 @@ export default function ContactSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
             >
-              이메일이 클립보드에 복사되었습니다!
+              {dict.copied}
             </motion.div>
           )}
         </AnimatePresence>

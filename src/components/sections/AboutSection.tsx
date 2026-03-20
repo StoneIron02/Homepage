@@ -3,12 +3,15 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer, staggerChild, scaleIn } from '@/lib/animations';
-import { introduction, education, affiliations } from '@/data/about';
 import TimelineItem from '@/components/ui/TimelineItem';
-
 import SkillOrbit from '@/components/ui/SkillOrbit';
+import type { Dictionary } from '@/i18n';
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  dict: Dictionary['about'];
+}
+
+export default function AboutSection({ dict }: AboutSectionProps) {
   return (
     <section id="about" className="relative section-padding">
       <div className="max-w-6xl mx-auto space-y-24">
@@ -20,7 +23,7 @@ export default function AboutSection() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary">ABOUT</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-text-primary">{dict.title}</h2>
           <div className="w-16 h-0.5 bg-gold mx-auto" style={{ marginTop: '1rem', marginBottom: '2rem' }} />
         </motion.div>
 
@@ -64,7 +67,7 @@ export default function AboutSection() {
             custom={0.2}
           >
             <blockquote className="text-xl md:text-2xl text-gold mb-6 leading-relaxed">
-              &ldquo;{introduction.quote}&rdquo;
+              &ldquo;{dict.introduction.quote}&rdquo;
             </blockquote>
             <motion.div
               className="space-y-3"
@@ -73,7 +76,7 @@ export default function AboutSection() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {introduction.paragraphs.map((para, i) => (
+              {dict.introduction.paragraphs.map((para, i) => (
                 <motion.p
                   key={i}
                   variants={staggerChild}
@@ -103,10 +106,10 @@ export default function AboutSection() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            Background
+            {dict.background}
           </motion.h3>
           <div className="max-w-2xl mx-auto" style={{ marginTop: '2rem' }}>
-            {education.map((item, i) => (
+            {dict.education.map((item, i) => (
               <TimelineItem key={item.year} item={item} index={i} />
             ))}
           </div>
@@ -121,10 +124,10 @@ export default function AboutSection() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            Activities
+            {dict.activities}
           </motion.h3>
           <div className="max-w-2xl mx-auto" style={{ marginTop: '2rem' }}>
-            {affiliations.map((item, i) => (
+            {dict.affiliations.map((item, i) => (
               <TimelineItem key={item.title} item={item} index={i} />
             ))}
           </div>
@@ -139,7 +142,7 @@ export default function AboutSection() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            Interests
+            {dict.interests}
           </motion.h3>
           <SkillOrbit />
         </div>

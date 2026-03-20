@@ -6,19 +6,27 @@ import { Menu, X } from 'lucide-react';
 import { useScrollSection } from '@/hooks/useScrollSection';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import ScrollProgress from '@/components/ui/ScrollProgress';
+import LocaleSwitcher from '@/components/ui/LocaleSwitcher';
 import type { SectionId } from '@/types';
+import type { Dictionary } from '@/i18n';
+import type { Locale } from '@/i18n';
 
-const LABELS: Record<SectionId, string> = {
-  hero: 'Home',
-  about: 'About',
-  projects: 'Projects',
-  contact: 'Contact',
-};
+interface NavigationProps {
+  dict: Dictionary['nav'];
+  lang: Locale;
+}
 
-export default function Navigation() {
+export default function Navigation({ dict, lang }: NavigationProps) {
   const { activeSection, scrollProgress, scrollTo, sections } = useScrollSection();
   const isMobile = useMediaQuery('(max-width: 767px)');
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const labels: Record<SectionId, string> = {
+    hero: dict.hero,
+    about: dict.about,
+    projects: dict.projects,
+    contact: dict.contact,
+  };
 
   const handleNav = (id: SectionId) => {
     scrollTo(id);
@@ -48,7 +56,7 @@ export default function Navigation() {
             >
               {/* 라벨 */}
               <span className="text-xs text-text-secondary opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">
-                {LABELS[id]}
+                {labels[id]}
               </span>
 
               {/* 도트 */}
@@ -66,15 +74,25 @@ export default function Navigation() {
         </nav>
       )}
 
+      {/* 언어 전환기 (데스크탑) */}
+      {!isMobile && (
+        <div className="fixed top-4 right-4 z-50">
+          <LocaleSwitcher lang={lang} />
+        </div>
+      )}
+
       {/* 모바일: 햄버거 */}
       {isMobile && (
         <>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="fixed top-4 right-4 z-50 w-10 h-10 flex items-center justify-center glass rounded-full"
-          >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+            <LocaleSwitcher lang={lang} />
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="w-10 h-10 flex items-center justify-center glass rounded-full"
+            >
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
 
           <AnimatePresence>
             {menuOpen && (
@@ -96,7 +114,7 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
                   >
-                    {LABELS[id]}
+                    {labels[id]}
                   </motion.button>
                 ))}
               </motion.div>
