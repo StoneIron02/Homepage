@@ -74,7 +74,7 @@ const ja: Dictionary = {
         description: '各種同人イベントのブース配置図をもとに、各ブースを簡単に探せるサイト。参加サークル情報やインフォをまとめて確認可能。',
       },
       mollufestival: {
-        title: 'モルル祭',
+        title: 'モルジェ',
         subtitle: 'Blue Archive Unofficial Festival',
         description: '韓国のブルーアーカイブ非公式オンリーイベント。サークル＋ステージ＋コスプレの三拍子揃った同人イベント。',
       },
