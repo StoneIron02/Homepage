@@ -1,0 +1,51 @@
+{
+  "env": {},
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'git diff --name-only 2>/dev/null | grep -qvE \"\\.md$\" && echo \"Code changed. Run /update-docs to check if docs need updating.\" || true'"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/history-commit.sh"
+          }
+        ],
+        "runAsynchronously": true
+      }
+    ]
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(*)",
+      "Edit",
+      "Read",
+      "WebSearch"
+    ],
+    "ask": [
+      "Bash(curl *)",
+      "Bash(git push *)",
+      "Bash(npm publish *)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -r *)",
+      "Bash(rm -rf *)",
+      "Bash(chmod 777 *)",
+      "Bash(curl * | sh)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | sh)",
+      "Bash(wget * | bash)",
+      "Read(.env)",
+      "Read(./secrets/**)",
+      "Read(~/.ssh/**)"
+    ]
+  }
+}
