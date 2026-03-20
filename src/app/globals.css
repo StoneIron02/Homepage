@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg-primary: #0D0D1A;
+  --color-bg-secondary: #1a0a2e;
+  --color-gold: #E8C547;
+  --color-navy: #2D3561;
+  --color-green-accent: #7CB342;
+  --color-pink-accent: #E91E8F;
+  --color-text-primary: #F5F5F5;
+  --color-text-secondary: #A0A0B0;
+  --color-text-muted: #6B6B80;
+  --font-sans: 'Pretendard', sans-serif;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis가 스무스 스크롤 관리 */
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* 이미지 복사/드래그 방지 */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-navy);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* SVG 스트로크 애니메이션 */
+@keyframes stroke-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 부유 애니메이션 */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* 펄스 인디케이터 */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+
+/* 타이핑 커서 깜빡임 */
+@keyframes blink-caret {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: var(--color-gold); }
+}
+
+/* 사이클링 그라디언트 보더 */
+@keyframes cycling-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 스크롤 유도 쉐브론 */
+@keyframes scroll-chevron {
+  0% { opacity: 0; transform: translateY(-8px); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+/* 오비탈 회전 */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
+}
+
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+.animate-scroll-chevron { animation: scroll-chevron 2s ease-in-out infinite; }
+.animate-cycling-gradient {
+  background-size: 200% 200%;
+  animation: cycling-gradient 3s ease infinite;
+}
+
+/* 그리드 배경 패턴 */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* 글래스모피즘 */
+.glass {
+  background: rgba(13, 13, 26, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 섹션 공통 */
+.section-padding {
+  padding: 6rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 8rem 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-padding {
+    padding: 10rem 6rem;
+  }
+}
+
+/* 접근성: 모션 감소 설정 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-dot,
+  .animate-scroll-chevron,
+  .animate-cycling-gradient {
+    animation: none !important;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
